@@ -88,10 +88,22 @@
                     >
                       Durée
                     </th>
+                    <th
+                      scope="col"
+                      class="
+                        px-3
+                        py-3.5
+                        text-left text-sm
+                        font-semibold
+                        text-gray-900
+                      "
+                    >
+                      Supprimer
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                  <tr v-for="f in films" :key="f.id_film">
+                  <tr v-for="(f, index) in films" :key="f.id_film">
                     <td
                       class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6"
                     >
@@ -141,6 +153,22 @@
                     >
                       {{ f.duree }}
                     </td>
+                    <td>
+                      <button
+                        class="
+                          bg-red-500
+                          hover:bg-red-700
+                          text-white
+                          font-bold
+                          py-2
+                          px-4
+                          rounded
+                        "
+                        @click.prevent="deleteFilm(index)"
+                      >
+                        SUPPRIMER
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -154,8 +182,30 @@
 
 <script>
 export default {
+  data() {
+    return {
+      selectFilm: null,
+    };
+  },
   created() {
     this.$store.dispatch("loadFilms");
+  },
+  methods: {
+    indexFilm(index) {
+      this.selectFilm = this.films[index].id_film;
+    },
+    async deleteFilm(index) {
+      await this.indexFilm(index);
+      this.$axios
+        .delete(this.$apiURL + "films/" + this.selectFilm)
+        .then((res) => {
+          console.log(res.data);
+          this.$store.dispatch("loadFilms");
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    },
   },
   computed: {
     films() {

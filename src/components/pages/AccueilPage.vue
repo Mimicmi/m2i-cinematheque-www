@@ -130,9 +130,4 @@ export default {
 .carousel-item.active {
   left: 0;
 }
-/* 
-#aime-film {
-  display: flex;
-  flex-shrink: 0;
-} */
 </style>

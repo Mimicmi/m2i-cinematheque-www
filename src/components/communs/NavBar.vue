@@ -89,7 +89,7 @@
                     aria-haspopup="true"
                   >
                     <span class="sr-only">Open user menu</span>
-                    <img
+                    <img                
                       v-if="checkToken === false"
                       class="h-8 w-8 rounded-full"
                       src="../../assets/logo.png"
@@ -113,6 +113,7 @@
                   </button>
                 </div>
                 <div
+                  id="connection"
                   v-show="activeMenu"
                   class="
                     origin-top-right
@@ -334,3 +335,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#connection {
+  z-index: 999;
+}
+</style>
